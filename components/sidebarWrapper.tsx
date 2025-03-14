@@ -1,10 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
 import { useAuth } from "@clerk/nextjs";
 import AppSidebar from "./app-sidebar";
 
-export default function sidebarWrapper(){
-    const { isLoaded, sessionId, userId} = useAuth()
+type wrapperProps = {
+    isAdmin: boolean;
+}
 
-    return <> <AppSidebar isLoaded={isLoaded} userId={userId} sessionId={sessionId}  /> </>;
+export default function sidebarWrapper({isAdmin}: wrapperProps) {
+
+
+
+    // return <> <AppSidebar isLoaded={isLoaded} userId={userId} sessionId={sessionId} isAdmin={isAdmin}  /> </>;
 }

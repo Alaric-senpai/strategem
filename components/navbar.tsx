@@ -24,8 +24,8 @@ export default function NavBar({ isAdmin }: NavBarProps) {
       </div>
       {isSignedIn ? (
         <div className="flex items-center gap-4 flex-row">
-          <Button asChild variant="outline" className="p-4 bg-blue-400  hover:bg-blue-600">
-            <SignOutButton>
+          <Button asChild variant="outline" className="p-4 bg-blue-400  hover:bg-blue-600 text-white">
+            <SignOutButton >
               <LogOutIcon size={25}  color='#ffffff'  className='text-white'/>
             </SignOutButton>
           </Button>

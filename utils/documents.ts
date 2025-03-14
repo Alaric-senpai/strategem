@@ -1,114 +1,108 @@
 import { Query } from "appwrite";
-import { client, ID, } from "./appwrite";
-import { CHATS_COLLECTION, DATABASE_ID, databases, PROJECTS_COLLECTION, USER_COLLECTION } from "./database";
-import { NewUser } from "@/lib/interfaces";
+import { ID } from "./appwrite";
+import { CHATS_COLLECTION, CLIENTS_COLLECTION, DATABASE_ID, databases, PROJECTS_COLLECTION, USER_COLLECTION } from "./database";
+import { NewClient, NewUser } from "@/lib/interfaces";
 
+export async function findUser(clerkid: string) {
 
-/**
- * find a specific user
- * 
- * @param clerkid
- */
-
-
-export async function findUser(clerkid:string){
-
-    try {
-        
-        const results = await databases.listDocuments(DATABASE_ID, USER_COLLECTION,[
-            Query.equal('clerkid', clerkid)
-        ]);
-
-        if(results.documents.length > 0){
-            const user = results.documents[0]
-            return user
-        }else{
-            return {
-                success:false,
-                message:'User does not exist'
-
-            }
-        }
-
-    } catch (error) {
-        throw error
+  try {
+    const results = await databases.listDocuments(DATABASE_ID, USER_COLLECTION, [
+      Query.equal("clerkid", clerkid)
+    ]);
+    if (results.documents.length > 0) {
+      return { success: true, user: results.documents[0] };
+    } else {
+      return { success: false, message: "User does not exist" };
     }
-
+  } catch (error) {
+    return { success: false, message: "Database query failed", error };
+  }
 }
 
-/**
- * get total projects for user
- * @param clerkid
- */
+export async function findClient(userid: string) {
+  try {
+    const results = await databases.listDocuments(DATABASE_ID, CLIENTS_COLLECTION, [
+      Query.equal("userid", userid)
+    ]);
 
+    if (results.documents.length > 0) {
+      return { success: true, user: results.documents[0] };
+    } else {
+      return { success: false, message: "User does not exist" };
+    }
+  } catch (error) {
+    return { success: false, message: "Database query failed", error };
+  }
+}
 
-export async function getTotalProjectsForUser(clerkid:string){
-
+export async function getTotalProjectsForUser(clerkid: string) {
+  try {
     const results = await databases.listDocuments(DATABASE_ID, PROJECTS_COLLECTION, [
-        Query.equal('userid', clerkid)
-    ])
+      Query.equal("userid", clerkid)
+    ]);
 
-    if(results){
-        return results
-    }
-    return Error('Error accessing db')
+    return { success: true, projects: results.documents };
+  } catch (error) {
+    return { success: false, message: "Failed to fetch projects", error };
+  }
 }
 
-/**
- * get total user chats
- * @param clerkid
- * @returns 
- * - documents = array containing all documents fitting this
- * 
- * - total = total records count
- */
-
-export async function getTotalChatsForUser(clerkid:string){
+export async function getTotalChatsForUser(clerkid: string) {
+  try {
     const results = await databases.listDocuments(DATABASE_ID, CHATS_COLLECTION, [
-        Query.equal('userid', clerkid)
-    ])
+      Query.equal("userid", clerkid)
+    ]);
 
-    if(results){
-        return results
-    }
-    return Error('Error accessing db')
+    return { success: true, chats: results.documents };
+  } catch (error) {
+    return { success: false, message: "Failed to fetch chats", error };
+  }
 }
 
-/**
- * GET ALL USERS REGISTERED CURRENLT CLIENTS
- */
-
-
-export async function getAllUsers(){
-
-    const results = await databases.listDocuments(DATABASE_ID, USER_COLLECTION)
-
-    return results;
+export async function getAllUsers() {
+  try {
+    const results = await databases.listDocuments(DATABASE_ID, USER_COLLECTION);
+    return { success: true, users: results.documents };
+  } catch (error) {
+    return { success: false, message: "Failed to fetch users", error };
+  }
 }
 
-/**
- * 
- * create a new User
- * 
- * @param data
- * 
- * @type NewUser 
- * 
- * @returns appwrite creation success
- */
-export async function AddUser(data:NewUser){
-    const fn = await databases.createDocument(DATABASE_ID, USER_COLLECTION, ID.unique(),
-    data
-    )
+export async function AddUser(data: NewUser) {
+  try {
+    const fn = await databases.createDocument(DATABASE_ID, USER_COLLECTION, ID.unique(), data);
 
-    if(fn.$id){
-        return {
-            success:true,
-            result:fn
-        }
+
+
+    // console.log("form add User function")
+    // console.log("User added Return", fn)
+
+    if (fn.$id) {
+      return { success: true, result: fn };
     }
-    return {
-        success:false,
-        result:fn
+
+
+    return { success: false, message: "Failed to create user", result: fn };
+  } catch (error) {
+    return { success: false, message: "Database error while creating user", error };
+  }
+}
+export async function AddClient(data: NewClient) {
+  try {
+    const fn = await databases.createDocument(DATABASE_ID,  CLIENTS_COLLECTION ,ID.unique(), data);
+
+
+
+    // console.log("form add User function")
+    // console.log("User added Return", fn)
+
+    if (fn.$id) {
+      return { success: true, result: fn };
     }
+
+
+    return { success: false, message: "Failed to create user", result: fn };
+  } catch (error) {
+    return { success: false, message: "Database error while creating user", error };
+  }
 }

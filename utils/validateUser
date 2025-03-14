@@ -1,0 +1,18 @@
+    let prompt = ""
+
+    if (projectType === "preset") {
+      const preset = PROJECT_PRESETS.find((p) => p.id === selectedPreset)
+      prompt = `Generate a detailed project structure for a ${preset?.name || "web application"} with the following additional details: ${projectDescription || "No additional details provided."}. The response should include modules, submodules, and recommended technologies.`
+    } else {
+      prompt = `Generate a detailed project structure for a ${projectName || "new project"} in the ${techIndustry || "tech"} industry, specializing in ${specialization || "full-stack development"}. 
+      Category: ${projectCategory || "N/A"}
+      Difficulty: ${difficultyLevel || "intermediate"}
+      Target Platform: ${targetPlatform || "web"}
+      Scalability Needs: ${scalabilityNeeds}%
+      Performance Requirements: ${performanceRequirements}%
+      Security Considerations: ${securityConsiderations}%
+      Preferred Frameworks: ${preferredFrameworks.join(", ") || "N/A"}
+      Additional Details: ${projectDescription || "N/A"}
+      
+      The response should include modules, submodules, and recommended technologies.`
+    }
