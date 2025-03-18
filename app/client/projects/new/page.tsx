@@ -36,7 +36,7 @@ export default function NewProject() {
 
   return (
     <>
-      <Card className="p-6 w=full m-auto md:w-10/12 p-4 bg-slate-600/50 border-slate-700">
+      <Card className=" w=full m-auto md:w-10/12 p-4 bg-slate-600/50 border-slate-700">
       
       </Card>
     </>
