@@ -6,7 +6,7 @@ import { ValidateUser } from "@/utils/user";
 import { PropsWithChildren } from "react";
 
 export default async function ClientLayout({ children }: PropsWithChildren) {
-  await ValidateUser();
+  // await ValidateUser();
 
   return (
     <SidebarProvider>
