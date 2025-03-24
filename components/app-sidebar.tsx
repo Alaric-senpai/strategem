@@ -41,6 +41,7 @@ import {
 import { SignOutButton, useUser } from "@clerk/nextjs"
 import { cn } from "@/lib/utils"
 import AvatarComponent from "./UserAvarar"
+import { Button } from "./ui/button"
 
 interface SidebarProps {
   isAdmin: boolean
@@ -116,41 +117,34 @@ const AppSidebar = ({ isAdmin }: SidebarProps) => {
       <SidebarFooter className="p-4 bg-slate-900 flex flex-row items-center gap-8 justify-between w-full">
         <div className="flex gap-2 items-center">
           <AvatarComponent />
+          <div className="text-white flex items-center justify-center">
+               {user?.fullName} 
+            
+          </div>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="text-white cursor-pointer">
               <LucideShieldEllipsis size={30} />
-              {/* {user?.fullName} */}
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-slate-800 border-slate-700 text-white">
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-            </DropdownMenuItem>
-            {isAdmin && (
-              <DropdownMenuItem>
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Billing</span>
-              </DropdownMenuItem>
-            )}
-            <DropdownMenuSeparator className="bg-slate-700" />
-            <DropdownMenuItem className="text-red-500">
-              <SignOutButton>
-                {({ signOut }) => (
-                  <div onClick={signOut} className="flex items-center w-full cursor-pointer">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </div>
-                )}
-              </SignOutButton>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
+                  <DropdownMenuContent align="end">
+                    <Link href="/profile" legacyBehavior passHref>
+                      <DropdownMenuItem>
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-red-500">
+                      <SignOutButton>
+                        <Button variant={"destructive"} className="w-full h-14 text-center bg-red-400 hover:bg-red-500">
+                          <LogOut className="mr-2 h-4 w-4" />
+                          Logout
+                        </Button>
+                      </SignOutButton>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
         </DropdownMenu>
       </SidebarFooter>
     </Sidebar>

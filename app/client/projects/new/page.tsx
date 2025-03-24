@@ -1,4 +1,5 @@
 "use client"
+
 import { useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import ProjectStyleSelector from "@/components/project-style-selector"
@@ -43,7 +44,6 @@ export default function NewProject() {
   }
 
   const onSubmit = (data: any) => {
-    console.log("Form Data:", data)
     setFormData(data)
     nextStep()
   }
@@ -60,10 +60,9 @@ export default function NewProject() {
       })
 
       const data = await response.json()
-      console.log("API Response:", data)
 
       if (data && !data.error) {
-        setProject(data)
+        setProject(data.project) // Make sure this matches the response structure
       }
     } catch (error) {
       console.error("Error:", error)
@@ -95,6 +94,7 @@ export default function NewProject() {
           {step === 3 && (
             <ProjectSuggestion
               project={project}
+              setProject={setProject}
               loading={loading}
               generateProject={generateProject}
               prevStep={prevStep}
