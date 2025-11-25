@@ -38,7 +38,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 // import AvatarComponent from "./UserAvatar";
-import { SignOutButton, useUser } from "@clerk/nextjs"
+import { SignOutButton, UserButton, useUser } from "@clerk/nextjs"
 import { cn } from "@/lib/utils"
 import AvatarComponent from "./UserAvarar"
 import { Button } from "./ui/button"
@@ -122,30 +122,7 @@ const AppSidebar = ({ isAdmin }: SidebarProps) => {
             
           </div>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="text-white cursor-pointer">
-              <LucideShieldEllipsis size={30} />
-            </div>
-          </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <Link href="/profile" legacyBehavior passHref>
-                      <DropdownMenuItem>
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                      </DropdownMenuItem>
-                    </Link>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-red-500">
-                      <SignOutButton>
-                        <Button variant={"destructive"} className="w-full h-14 text-center bg-red-400 hover:bg-red-500">
-                          <LogOut className="mr-2 h-4 w-4" />
-                          Logout
-                        </Button>
-                      </SignOutButton>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-        </DropdownMenu>
+            <UserButton />
       </SidebarFooter>
     </Sidebar>
   )
